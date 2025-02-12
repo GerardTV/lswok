@@ -1,6 +1,7 @@
 package model;
 
 public class Wok {
+    private static int woksVendidos = 0;
     private Base base;
     private Ingrediente[] ingredientes;
     private Salsa salsa;
@@ -11,6 +12,7 @@ public class Wok {
         this.ingredientes = ingredientes;
         this.salsa = salsa;
         calcularPrecio();
+        woksVendidos++;
     }
 
     private void calcularPrecio() {
