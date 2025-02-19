@@ -1,6 +1,6 @@
 package model;
 
-public class Wok {
+public class Wok implements Comparable<Wok> {
     private static int woksVendidos = 0;
     private Base base;
     private Ingrediente[] ingredientes;
@@ -16,10 +16,20 @@ public class Wok {
     }
 
     private void calcularPrecio() {
-        //TODO: Calcular el precio i establecer el valor atributo precio.
+        double totalPrecio = base.getPrice();
+        for (Ingrediente ingrediente : ingredientes) {
+            totalPrecio += ingrediente.getPrice();
+        }
+        totalPrecio += salsa.getPrice();
+        this.precio = totalPrecio;
     }
 
     public double getPrecio() {
         return precio;
+    }
+
+    @Override
+    public int compareTo(Wok o) {
+        return this.getPrecio() < o.getPrecio() ? -1 : this.getPrecio() == o.getPrecio() ? 0 : 1;
     }
 }

@@ -1,19 +1,9 @@
 package model;
 
-public class Salsa {
-    private String descripción;
-    private double price;
+public class Salsa extends Producto {
 
     public Salsa(String descripción, double price) {
-        this.descripción = descripción;
-        this.price = price;
+        super(descripción, price);
     }
 
-    public String getDescripción() {
-        return descripción;
-    }
-
-    public double getPrice() {
-        return price;
-    }
 }

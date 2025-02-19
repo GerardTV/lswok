@@ -1,19 +1,13 @@
 package model;
 
-public class Ingrediente {
-    private String descripción;
-    private double price;
+public class Ingrediente extends Producto implements Comparable<Ingrediente> {
 
     public Ingrediente(String descripción, double price) {
-        this.descripción = descripción;
-        this.price = price;
+        super(descripción, price);
     }
 
-    public String getDescripción() {
-        return descripción;
-    }
-
-    public double getPrice() {
-        return price;
+    @Override
+    public int compareTo(Ingrediente o) {
+        return this.getDescripción().compareTo(o.getDescripción());
     }
 }
