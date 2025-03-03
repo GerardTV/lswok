@@ -10,4 +10,9 @@ public class Ingrediente extends Producto implements Comparable<Ingrediente> {
     public int compareTo(Ingrediente o) {
         return this.getDescripción().compareTo(o.getDescripción());
     }
+
+    @Override
+    public String toString() {
+        return  super.getDescripción() + " - "+   String.format("%.2f",super.getPrice()) + "€";
+    }
 }

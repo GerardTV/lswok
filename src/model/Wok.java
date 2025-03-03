@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 public class Wok implements Comparable<Wok> {
     private static int woksVendidos = 0;
     private Base base;
@@ -31,5 +33,17 @@ public class Wok implements Comparable<Wok> {
     @Override
     public int compareTo(Wok o) {
         return this.getPrecio() < o.getPrecio() ? -1 : this.getPrecio() == o.getPrecio() ? 0 : 1;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder(this.base.toString() + "\n");
+        result.append(" Ingredientes: ");
+        for (Ingrediente i : this.ingredientes){
+            result.append(i.toString()).append(", ");
+        }
+        result.append("\n").append(this.salsa.toString()).append("\n");
+        result.append(" Precio Total: " + String.format("%.2f",precio) + "€\n");
+        return result.toString();
     }
 }

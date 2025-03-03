@@ -6,4 +6,9 @@ public class Salsa extends Producto {
         super(descripción, price);
     }
 
+    @Override
+    public String toString() {
+        return  " Salsa: " + super.getDescripción() + " - " + String.format("%.2f",super.getPrice()) + "€";
+    }
+
 }

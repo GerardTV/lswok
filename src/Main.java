@@ -2,6 +2,7 @@ import model.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -9,16 +10,33 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
-        int i = Utils.leerInt(scan, "Introduce el numero de woks que quieres pedir",1,5);
         ArrayList<Wok> woks = new ArrayList<>();
-       for (int j = 0; j < i; j++) {
-            Wok wok = pedirWok(scan);
-            System.out.println("El precio de tu wok es: "+  wok.getPrecio());
-            woks.add(wok);
-        }
+        addTestData(woks,10);
         Collections.sort(woks);
-        i = 0;
+        woks.stream().forEach(System.out::println);
     }
+
+    private static void addTestData(ArrayList<Wok> woks,int numeroWoks) {
+        Random random = new Random();
+        for (int i = 0; i < numeroWoks; i++) {
+            Base base = new Base(
+                    DatosWok.basesDesc[random.nextInt(DatosWok.basesDesc.length)],
+                    random.nextInt(2)==1?MedidaBase.PEQUEÑA:MedidaBase.GRANDE,
+                    DatosWok.basePrecios[random.nextInt(DatosWok.basePrecios.length)]
+            );
+
+            Ingrediente[] ingredientes = new Ingrediente[random.nextInt(3) + 1]; // Entre 1 y 3 ingredientes
+            for (int j = 0; j < ingredientes.length; j++) {
+                int index = random.nextInt(DatosWok.ingredientesDesc.length);
+                ingredientes[j] = new Ingrediente(DatosWok.ingredientesDesc[index], DatosWok.preciosIngredientes[index]);
+            }
+
+            Salsa salsa = new Salsa(DatosWok.salsas[random.nextInt(DatosWok.salsas.length)], 0);
+
+            woks.add(new Wok(base, ingredientes, salsa));
+        }
+    }
+
 
     private static Wok pedirWok(Scanner scan) {
         Base base = obtenerBase(scan);
@@ -66,9 +84,11 @@ public class Main {
         scan.nextLine(); // Consume the newline character
         if( DatosWok.baseTamanioConfigurable[selectedIndex]){
             int tamanio = Utils.leerInt(scan, "Seleccione el tamaño de la base (1. Pequeño, 2. Grande)", 1, 2);
-            return new Base(DatosWok.basesDesc[selectedIndex],tamanio==1?"PEQUEÑO":"GRANDE", tamanio);
+            return new Base(DatosWok.basesDesc[selectedIndex],tamanio==1?MedidaBase.PEQUEÑA: MedidaBase.GRANDE, tamanio);//inline if
+
+
         }
-        return new Base(DatosWok.basesDesc[selectedIndex],"GRANDE", DatosWok.basePrecios[selectedIndex] );
+        return new Base(DatosWok.basesDesc[selectedIndex],MedidaBase.GRANDE, DatosWok.basePrecios[selectedIndex] );
     }
 
 }
