@@ -1,9 +1,7 @@
 import model.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Main {
@@ -13,7 +11,17 @@ public class Main {
         ArrayList<Wok> woks = new ArrayList<>();
         addTestData(woks,10);
         Collections.sort(woks);
-        woks.stream().forEach(System.out::println);
+        //woks.stream().forEach(System.out::println);
+        //filtrarPorPrecio(woks, 15).forEach(System.out::println);
+        filtrarPorIngrediente(woks,2,3).forEach(System.out::println);
+    }
+
+    private static List<Wok> filtrarPorIngrediente(ArrayList<Wok> woks,int indexIngrediente, int maxIngredientes) {
+        return woks.stream().filter(w -> w.getIngredientes().length >= maxIngredientes && w.getIngredientes().length <= maxIngredientes).collect(Collectors.toList());
+    }
+
+    private static List<Wok> filtrarPorPrecio(ArrayList<Wok> woks, double precioMaximo) {
+        return woks.stream().filter(w -> w.getPrecio() <= precioMaximo).collect(Collectors.toList());
     }
 
     private static void addTestData(ArrayList<Wok> woks,int numeroWoks) {
@@ -25,7 +33,7 @@ public class Main {
                     DatosWok.basePrecios[random.nextInt(DatosWok.basePrecios.length)]
             );
 
-            Ingrediente[] ingredientes = new Ingrediente[random.nextInt(3) + 1]; // Entre 1 y 3 ingredientes
+            Ingrediente[] ingredientes = new Ingrediente[random.nextInt(5) + 1]; // Entre 1 y 5 ingredientes
             for (int j = 0; j < ingredientes.length; j++) {
                 int index = random.nextInt(DatosWok.ingredientesDesc.length);
                 ingredientes[j] = new Ingrediente(DatosWok.ingredientesDesc[index], DatosWok.preciosIngredientes[index]);

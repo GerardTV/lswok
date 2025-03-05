@@ -26,6 +26,10 @@ public class Wok implements Comparable<Wok> {
         this.precio = totalPrecio;
     }
 
+    public Ingrediente[] getIngredientes() {
+        return ingredientes;
+    }
+
     public double getPrecio() {
         return precio;
     }
